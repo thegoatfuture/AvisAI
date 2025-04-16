@@ -1,7 +1,7 @@
 // src/components/StatsSection.jsx
 
 import React from "react";
-import CountUp from "react-countup";
+import CountUp from "react-countup"
 import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
 import { useInView } from "react-intersection-observer";
