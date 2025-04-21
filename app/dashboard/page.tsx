@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthOptions } from "@/lib/authOptions";
 import ListeAvis, { Avis } from "@/components/ListeAvis";
 import { motion } from "framer-motion";
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(getAuthOptions());
 
   let avis: Avis[] = [];
 
