@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"; // 🚨 Forcer rendu dynamique pour éviter crash au build
+
 import NextAuth from "next-auth";
 
 console.log("⏳ [NextAuth] Début import dynamique de authOptions...");
