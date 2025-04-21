@@ -1,28 +1,29 @@
+// middleware.ts — Global Middleware pour sécurisation et redirection dans une app SaaS
 
-import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(req: NextRequest) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
-  const isAuthPage =
-    req.nextUrl.pathname.startsWith("/login") ||
-    req.nextUrl.pathname.startsWith("/register");
-
-  const isProtectedRoute = req.nextUrl.pathname.startsWith("/dashboard");
-
-  if (!token && isProtectedRoute) {
-    return NextResponse.redirect(new URL("/login", req.url));
+export default withAuth(
+  function middleware(req: NextRequest) {
+    // Log des tentatives d'accès pour debugging ou audit
+    console.log("🛡️ Vérification d'accès à :", req.nextUrl.pathname);
+    
+    return NextResponse.next();
+  },
+  {
+    pages: {
+      signIn: "/login", // Redirection personnalisée si l'utilisateur n'est pas connecté
+    },
   }
+);
 
-  if (token && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
-
-  return NextResponse.next();
-}
-
+// 🔐 Active le middleware uniquement sur les routes protégées
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/register"],
+  matcher: [
+    "/dashboard/:path*",
+    "/avis/:path*",
+    "/profile/:path*",
+    "/generate/:path*"
+  ],
 };

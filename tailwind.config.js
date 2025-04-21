@@ -5,25 +5,31 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}"
+    "./styles/**/*.{css,js,ts,jsx,tsx}", // ← 🧠 INDISPENSABLE pour détecter globals.css
   ],
   theme: {
     extend: {
       colors: {
-        brand: "#e02424",
-        brandDark: "#b91c1c",
+        marque: "#e02424",
+        marqueDark: "#b91c1c",
         surface: {
           light: "#ffffff",
-          dark: "#000000"
+          dark: "#000000",
+          muted: "#f5f5f5",
         },
         text: {
-          light: "#000000",
-          dark: "#ffffff"
-        }
+          light: "#0f0f0f",
+          dark: "#fafafa",
+        },
+        accent: {
+          light: "#f87171",
+          dark: "#7f1d1d",
+        },
       },
       animation: {
         "scroll-bar": "scrollGradient 4s ease infinite",
         "spin-slow": "spin 8s linear infinite",
+        "pulse-slow": "pulse 3s ease-in-out infinite",
       },
       keyframes: {
         scrollGradient: {
@@ -32,7 +38,15 @@ module.exports = {
           "100%": { backgroundPosition: "0% 50%" },
         },
       },
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
+      },
+      borderRadius: {
+        xl: "1rem",
+        "2xl": "1.5rem",
+        "3xl": "2rem",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };

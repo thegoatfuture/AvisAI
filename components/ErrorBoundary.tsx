@@ -1,28 +1,46 @@
+"use client";
 
-// src/components/ErrorBoundary.jsx
+import React, { Component, ReactNode } from "react";
 
-import React from "react";
+interface Props {
+  children: ReactNode;
+}
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+interface State {
+  hasError: boolean;
+  error?: Error | null;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, info) {
-    console.error("Caught by ErrorBoundary:", error, info);
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("Erreur capturée dans ErrorBoundary:", error, errorInfo);
   }
+
+  handleReload = () => {
+    window.location.reload();
+  };
 
   render() {
     if (this.state.hasError) {
       return (
-        <div className="p-8 text-center text-white bg-red-800 min-h-screen">
-          <h1 className="text-3xl font-bold mb-4">Une erreur est survenue 😢</h1>
-          <p>{this.state.error?.message || "Quelque chose s'est mal passé."}</p>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-red-50 dark:bg-red-950 text-red-800 dark:text-red-100 px-4 text-center">
+          <h1 className="text-3xl font-bold mb-2">🚨 Une erreur est survenue</h1>
+          <p className="mb-6">{this.state.error?.message || "Quelque chose s’est mal passé."}</p>
+          <button
+            onClick={this.handleReload}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+          >
+            Recharger la page
+          </button>
         </div>
       );
     }

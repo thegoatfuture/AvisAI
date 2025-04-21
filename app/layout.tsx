@@ -1,23 +1,28 @@
-// app/layout.tsx
-import "@/styles/globals.css";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import Layout from "@/components/layout/Layout";
+"use client";
 
-const inter = Inter({ subsets: ["latin"] });
+import "@/styles/globals.css"; // 💡 Import global obligatoire (ex: Tailwind, typographie, reset, etc.)
 
-export const metadata = {
-  title: "AvisAI | Générateur d'Avis IA",
-  description: "Générez des preuves sociales crédibles en un clic grâce à l’IA.",
-};
+import React from "react";
+import { usePathname } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+import PageWrapper from "@/components/PageWrapper";
+import Providers from "@/components/Providers";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isDashboard = pathname?.startsWith("/dashboard");
+
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`min-h-screen bg-white dark:bg-black text-black dark:text-white antialiased ${inter.className}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Layout>{children}</Layout>
-        </ThemeProvider>
+      <body className="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500">
+        <Providers>
+          <Navbar />
+          <div className={`flex min-h-screen`}>
+            {isDashboard && <Sidebar />}
+            <PageWrapper>{children}</PageWrapper>
+          </div>
+        </Providers>
       </body>
     </html>
   );

@@ -1,88 +1,55 @@
-// src/components/VideoDemoSection.jsx
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 export default function VideoDemoSection() {
-  const scrollToFeatures = () => {
-    const el = document.getElementById("features");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <section className="py-24 px-6 text-center bg-black text-white">
+    <section className="relative py-24 px-6 bg-white dark:bg-zinc-950 text-center overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="inline-block bg-marque text-xs font-semibold uppercase text-white px-4 py-1 rounded-full mb-6"
+        className="relative z-10 max-w-4xl mx-auto"
       >
-        Nouveau
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-zinc-900 dark:text-white">
+          💡 Démo en action
+        </h2>
+        <p className="text-lg text-gray-600 dark:text-gray-300 mb-10">
+          Découvrez AvisAI en 60 secondes : un aperçu clair, rapide et inspirant de ce que notre plateforme peut faire pour votre entreprise.
+        </p>
       </motion.div>
 
-      <motion.h2
-        className="text-3xl md:text-4xl font-bold mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        viewport={{ once: true }}
-      >
-        BrandTracker
-      </motion.h2>
-
-      <motion.p
-        className="text-white/70 text-lg max-w-2xl mx-auto mb-8"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        viewport={{ once: true }}
-      >
-        Analysez les plus grandes marques. Surveillez les tendances publicitaires.
-        Découvrez les créations les plus performantes.
-      </motion.p>
-
       <motion.div
-        className="aspect-video max-w-6xl mx-auto rounded-xl overflow-hidden shadow-2xl group transition duration-300"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
         viewport={{ once: true }}
+        className="relative z-10 max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-200 dark:border-zinc-800"
       >
         <video
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:shadow-red-500/50 group-hover:shadow-2xl"
           autoPlay
           muted
           loop
           playsInline
-          src="/video/demo.mp4"
-        />
+          className="w-full h-full object-cover"
+        >
+          <source src="/demo.mp4" type="video/mp4" />
+          Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        viewport={{ once: true }}
-        className="mt-8"
-      >
-        <button
-          onClick={scrollToFeatures}
-          className="inline-flex items-center gap-2 bg-marque hover:bg-marque/90 text-white font-semibold py-3 px-6 rounded-full transition"
-        >
-          En savoir plus <ArrowRight size={18} />
-        </button>
-      </motion.div>
+      {/* Overlay de gradient décoratif */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white dark:via-zinc-900/20 dark:to-zinc-950 pointer-events-none z-0" />
 
       <motion.p
-        className="text-sm text-white/50 mt-4"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9 }}
-        viewport={{ once: true }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+        className="mt-12 text-sm text-gray-500 dark:text-gray-400 z-10 relative"
       >
-        Mis à jour <span className="font-semibold">il y a 10 heures</span>
+        Pas besoin d’un long tuto – juste ce qu’il faut pour vous convaincre 🚀
       </motion.p>
     </section>
   );

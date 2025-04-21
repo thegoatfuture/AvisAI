@@ -1,29 +1,25 @@
-"use client";
-
-import React from "react";
+import "./globals.css";
 import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import Header from "@/components/Header";
+import Providers from "@/components/Providers";
+import { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+export const metadata: Metadata = {
+  title: "AvisAI – Générateur d'avis IA",
+  description: "Boostez votre crédibilité grâce à l'IA. Créez et gérez des témoignages clients automatiquement.",
+};
 
-export default function Layout({ children }: LayoutProps) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={cn(
-        "bg-white dark:bg-black text-black dark:text-white min-h-screen antialiased",
-        inter.className
-      )}
-    >
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Header />
-        <main>{children}</main>
-      </ThemeProvider>
-    </div>
+    <html lang="fr" className="scroll-smooth">
+      <body className={inter.className}>
+        <Providers>
+          {children}
+          <SpeedInsights /> {/* Pour tracking Vercel si tu déploies dessus */}
+        </Providers>
+      </body>
+    </html>
   );
 }

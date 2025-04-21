@@ -1,84 +1,96 @@
-// src/components/FAQ.jsx
+"use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
-const faqs = [
-  {
-    question: "Comment générer des avis IA ?",
-    answer:
-      "Connectez-vous à votre compte, sélectionnez le produit ou service concerné, puis cliquez sur \"Générer un avis\". Notre moteur IA se charge de créer un contenu crédible, réaliste et adapté à votre audience cible.",
-  },
-  {
-    question: "Puis-je modifier les visuels générés ?",
-    answer:
-      "Oui. Chaque visuel généré peut être personnalisé via notre éditeur intégré. Changez les couleurs, les polices, les images ou même les textes pour les adapter à votre identité visuelle.",
-  },
-  {
-    question: "Comment contacter le support ?",
-    answer:
-      "Notre équipe support est joignable 24h/24 via la page Contact. Vous pouvez également écrire à support@avisai.com : réponse garantie sous 24h (jours ouvrés).",
-  },
-];
-
-function FAQItem({ faq, index, active, toggle }) {
-  const isOpen = active === index;
-
-  return (
-    <motion.div
-      layout
-      initial={false}
-      animate={{
-        backgroundColor: isOpen ? undefined : undefined,
-      }}
-      className="border border-white/10 rounded-xl p-6 bg-[#f3f4f6] dark:bg-[#1f1f1f]"
-    >
-      <button
-        className="w-full flex justify-between items-center text-left text-lg font-medium text-black dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-marque"
-        onClick={() => toggle(index)}
-      >
-        <span>{faq.question}</span>
-        <motion.span
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <ChevronDown className="w-5 h-5 text-marque" />
-        </motion.span>
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            className="mt-4 text-sm text-gray-700 dark:text-gray-300"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {faq.answer}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
+interface FAQItem {
+  question: string;
+  answer: string;
 }
 
-export default function FAQ() {
-  const [active, setActive] = useState(null);
+const faqData: FAQItem[] = [
+  {
+    question: "Comment fonctionne AvisAI ?",
+    answer: "AvisAI utilise l’IA pour générer automatiquement des témoignages réalistes et engageants adaptés à votre secteur."
+  },
+  {
+    question: "Puis-je personnaliser les avis ?",
+    answer: "Absolument. Couleur, ton, longueur, vous pouvez tout ajuster à votre marque."
+  },
+  {
+    question: "Comment intégrer les avis sur mon site ?",
+    answer: "Vous pouvez copier un snippet ou utiliser notre widget React prêt à l'emploi."
+  },
+  {
+    question: "AvisAI est-il compatible avec mon CMS ?",
+    answer: "Oui. WordPress, Webflow, Shopify, Ghost et bien d'autres."
+  }
+];
 
-  const toggle = (index) => {
-    setActive(active === index ? null : index);
-  };
+export default function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-white dark:bg-[#111] text-black dark:text-white px-6 py-20">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Foire aux questions</h2>
-        <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <FAQItem key={i} index={i} faq={faq} active={active} toggle={toggle} />
-          ))}
-        </div>
+    <section className="bg-white dark:bg-zinc-950 py-20 px-6">
+      <div className="max-w-4xl mx-auto text-center mb-12">
+        <motion.h2
+          className="text-4xl md:text-5xl font-extrabold mb-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Foire aux questions
+        </motion.h2>
+        <motion.p
+          className="text-gray-600 dark:text-gray-400 text-base md:text-lg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Toutes les réponses à vos interrogations les plus fréquentes.
+        </motion.p>
+      </div>
+
+      <div className="max-w-2xl mx-auto space-y-4">
+        {faqData.map((item, index) => {
+          const isOpen = openIndex === index;
+
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="rounded-xl border border-zinc-300 dark:border-zinc-700 overflow-hidden shadow"
+            >
+              <button
+                className="w-full flex justify-between items-center text-left px-6 py-4 font-medium text-zinc-800 dark:text-white bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+              >
+                {item.question}
+                <ChevronDown
+                  className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                />
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="answer"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300 bg-white dark:bg-zinc-950"
+                  >
+                    {item.answer}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );

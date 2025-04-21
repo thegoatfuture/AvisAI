@@ -1,18 +1,27 @@
-import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+"use client";
 
-export default function PageWrapper({ children }) {
-  const location = useLocation();
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import React from "react";
+
+interface PageWrapperProps {
+  children: React.ReactNode;
+}
+
+export default function PageWrapper({ children }: PageWrapperProps) {
+  const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="wait">
       <motion.div
-        key={location.pathname}
+        key={pathname}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.3 }}
+        transition={{
+          duration: 0.4,
+          ease: "easeInOut"
+        }}
         className="min-h-screen bg-white dark:bg-black text-black dark:text-white"
       >
         {children}

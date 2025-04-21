@@ -1,37 +1,39 @@
-// src/components/ui/ButtonDuo.tsx
+"use client";
 
-import React from "react";
-import { cn } from "@/lib/utils";
+import React, { ReactNode } from "react";
+import { motion } from "framer-motion";
+import clsx from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
 
-export type ButtonVariant = "primary" | "secondary" | "destructive" | "ghost";
-
-interface ButtonDuoProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
+interface ButtonDuoProps extends ComponentPropsWithoutRef<typeof motion.button> {
+  children: ReactNode;
+  variant?: "primary" | "secondary";
 }
-
-const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-blue-600 text-white hover:bg-blue-700",
-  secondary: "bg-gray-200 text-black hover:bg-gray-300",
-  destructive: "bg-red-600 text-white hover:bg-red-700",
-  ghost: "bg-transparent text-black hover:bg-gray-100 dark:text-white",
-};
 
 export default function ButtonDuo({
   children,
-  variant = "primary",
+  variant = "secondary",
   className,
   ...props
 }: ButtonDuoProps) {
+  const baseStyles =
+    "px-5 py-2.5 rounded-xl font-medium text-sm md:text-base transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-marque";
+
+  const variants = {
+    primary:
+      "bg-marque text-white hover:bg-red-600 shadow-md hover:shadow-lg",
+    secondary:
+      "bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/80",
+  };
+
   return (
-    <button
-      className={cn(
-        "px-6 py-3 rounded-xl font-semibold text-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2",
-        variantClasses[variant],
-        className
-      )}
+    <motion.button
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.97 }}
+      className={clsx(baseStyles, variants[variant], className)}
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }

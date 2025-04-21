@@ -1,7 +1,7 @@
-// postcss.config.js
+// postcss.config.js — Fix spécial pour Vercel (2025)
 module.exports = {
   plugins: {
-    "@tailwindcss/postcss": {},
+    "@tailwindcss/postcss": {}, // ✅ Vercel accepte ce format uniquement
     autoprefixer: {},
   },
 };

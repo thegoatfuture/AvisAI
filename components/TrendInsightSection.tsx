@@ -1,4 +1,4 @@
-// src/components/TrendInsightSection.jsx
+"use client";
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -10,54 +10,54 @@ export default function TrendInsightSection() {
   };
 
   return (
-    <section className="bg-surface-light dark:bg-surface-dark py-20 px-6 text-center text-text-light dark:text-text-dark transition-colors duration-300">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-black py-24 px-6 text-center text-zinc-800 dark:text-white transition-colors duration-500">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="flex justify-center mb-6"
+        className="flex justify-center mb-8"
       >
-        <div className="rounded-2xl border border-marque/50 p-4 shadow-inner bg-white/50 dark:bg-black/20">
+        <div className="p-4 bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-marque/30 rounded-full shadow-lg">
           <img
             src="https://www.svgrepo.com/show/501392/growth-up.svg"
             alt="Icône de tendances"
-            className="w-8 h-8 text-marque"
+            className="w-10 h-10 text-marque"
           />
         </div>
       </motion.div>
 
       <motion.h2
-        className="text-4xl md:text-5xl font-bold mb-6"
-        initial={{ opacity: 0, y: 20 }}
+        className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight mb-6"
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         viewport={{ once: true }}
       >
-        Repérez les tendances virales<br /> avant tout le monde
+        Repérez les tendances virales <br className="hidden md:inline-block" /> avant tout le monde
       </motion.h2>
 
       <motion.p
-        className="max-w-3xl mx-auto text-gray-700 dark:text-white/70 text-lg mb-10"
+        className="max-w-2xl mx-auto text-lg md:text-xl text-zinc-600 dark:text-zinc-400 mb-10 leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
         viewport={{ once: true }}
       >
-        Restez en avance en suivant ce qui explose sur TikTok, Twitter et plus encore.
-        AvisAI détecte les signaux : hashtags en hausse, pics de mots-clés... transformez ces
-        tendances en ventes avant vos concurrents.
+        Surveillez les signaux faibles avant qu’ils n’explosent. TikTok, X (Twitter), Instagram… AvisAI
+        capte les hausses de hashtags, les montées de requêtes, les tendances cachées – pour vous donner
+        l’avantage business en temps réel.
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.6 }}
         viewport={{ once: true }}
       >
         <button
           onClick={scrollToSection}
-          className="bg-marque hover:bg-red-600 text-white font-semibold text-lg px-6 py-3 rounded-xl shadow-md transition"
+          className="bg-marque hover:bg-red-600 text-white font-semibold text-lg px-6 py-3 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
         >
           Commencer à suivre maintenant
         </button>

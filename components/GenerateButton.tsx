@@ -1,41 +1,26 @@
-
 "use client";
-import { useState } from "react";
+
+import React from "react";
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 export default function GenerateButton() {
-  const [loading, setLoading] = useState(false);
-  const [avis, setAvis] = useState<any>(null);
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    const res = await fetch("/api/generate", { method: "POST" });
-
-    if (res.ok) {
-      const data = await res.json();
-      setAvis(data);
-    } else {
-      alert("Erreur lors de la génération.");
-    }
-
-    setLoading(false);
+  const handleClick = () => {
+    alert("Fonctionnalité de génération en cours d'intégration !");
   };
 
   return (
-    <div className="p-4 border rounded-xl">
-      <button
-        onClick={handleGenerate}
-        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-        disabled={loading}
-      >
-        {loading ? "Génération..." : "🎨 Générer un avis IA"}
-      </button>
-
-      {avis && (
-        <div className="mt-4">
-          <p className="text-lg">{avis.content}</p>
-          {avis.imageUrl && <img src={avis.imageUrl} alt="Avis IA" className="mt-2 rounded" />}
-        </div>
-      )}
-    </div>
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.97 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      onClick={handleClick}
+      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <Sparkles className="w-5 h-5 animate-pulse" />
+      Générer un avis IA
+    </motion.button>
   );
 }

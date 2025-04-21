@@ -1,77 +1,34 @@
-import React, { useEffect, useRef } from "react";
+"use client";
 
-export default function GlowLinerCard({ children }) {
-  const glowRef = useRef(null);
-  const glowLayerRef = useRef(null);
+import React from "react";
+import { motion } from "framer-motion";
 
-  useEffect(() => {
-    let angle = 0;
-    let animationFrame;
-    let colorIndex = 0;
+interface GlowLinerCardProps {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+}
 
-    const colors = ["#e02424", "#f97316", "#eab308", "#8b5cf6", "#ec4899"];
-    const arcSize = 3;
-    const speed = 0.6;
-
-    const animate = () => {
-      angle = (angle + speed) % 360;
-      const color = colors[colorIndex];
-      if (glowRef.current) {
-        glowRef.current.style.transform = `rotate(${angle}deg)`;
-        glowRef.current.style.background = color;
-      }
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    const interval = setInterval(() => {
-      colorIndex = (colorIndex + 1) % colors.length;
-    }, 1000);
-
-    animate();
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-      clearInterval(interval);
-    };
-  }, []);
-
+export default function GlowLinerCard({
+  title,
+  description,
+  icon,
+}: GlowLinerCardProps) {
   return (
-    <div className="relative w-full max-w-md mx-auto">
-      {/* SVG or mask-based overlay */}
-      <div
-        ref={glowRef}
-        className="absolute inset-0 z-0 rounded-3xl pointer-events-none"
-        style={{
-          background: `#e02424`,
-          borderRadius: "1.5rem",
-          maskImage: "conic-gradient(transparent 0deg, black 3deg, transparent 6deg)",
-          WebkitMaskImage: "conic-gradient(transparent 0deg, black 3deg, transparent 6deg)",
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-          maskSize: "100% 100%",
-          WebkitMaskSize: "100% 100%",
-          willChange: "transform",
-          filter: "drop-shadow(0 0 6px #e02424) brightness(2)"
-        }}
-      />
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      className="relative p-6 rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white overflow-hidden shadow-lg hover:border-pink-500"
+    >
+      {/* Glow animated border */}
+      <div className="absolute inset-0 pointer-events-none rounded-2xl border border-pink-500/40 blur-xl opacity-0 hover:opacity-30 transition-opacity duration-300" />
 
-      {/* Visible glowing border layer */}
-      <div
-        ref={glowLayerRef}
-        className="absolute inset-0 rounded-3xl border-[2px] border-transparent pointer-events-none z-0"
-        style={{
-          borderImage: "conic-gradient(#e02424 0deg, transparent 3deg, transparent 360deg) 1",
-          borderImageSlice: 1,
-          borderImageOutset: 0,
-          borderImageRepeat: "round",
-          transform: "rotate(0deg)",
-          willChange: "transform"
-        }}
-      />
-
-      <div className="relative z-10 bg-[#0b0b0b] text-white rounded-3xl p-10 border border-white/10">
-        {children}
+      <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-pink-600/10 text-pink-400">
+        {icon}
       </div>
-    </div>
+
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-zinc-400">{description}</p>
+    </motion.div>
   );
 }

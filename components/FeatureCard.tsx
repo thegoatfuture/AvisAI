@@ -1,26 +1,36 @@
-// src/components/FeatureCard.jsx
+"use client";
+
 import React from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils"; // si tu utilises une fonction classNames utilitaire
 
-export default function FeatureCard({ icon, title, description }) {
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+export default function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
     <motion.div
-      className="relative p-6 rounded-2xl bg-white dark:bg-black text-black dark:text-white shadow-xl overflow-hidden"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       viewport={{ once: true }}
+      className={cn(
+        "group relative overflow-hidden rounded-2xl p-6 shadow-md bg-white/90 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+      )}
     >
-      {/* Animated Border */}
-      <span className="absolute inset-0 border-animation z-0" />
-
-      <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-        <div className="bg-marque/10 dark:bg-white/10 p-4 rounded-full">
-          <img src={icon} alt={title} className="w-10 h-10" />
-        </div>
-        <h3 className="text-xl font-bold">{title}</h3>
-        <p className="text-sm opacity-80">{description}</p>
+      <div className="flex items-center justify-center w-14 h-14 mb-4 rounded-full bg-pink-100 dark:bg-pink-500/10">
+        {icon}
       </div>
+      <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2 group-hover:text-pink-500 transition-colors">
+        {title}
+      </h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+
+      {/* effet glow */}
+      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 blur-2xl rounded-2xl" />
     </motion.div>
   );
 }

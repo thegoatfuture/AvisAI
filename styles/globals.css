@@ -3,15 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === Global Styles === */
+/* === Reset global === */
 html,
 body {
   padding: 0;
   margin: 0;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
   background-color: #000;
   color: #fff;
-  scroll-behavior: smooth;
-  font-family: Inter, sans-serif;
 }
 
 /* === Typography === */
@@ -32,7 +32,6 @@ a {
   text-decoration: none;
   transition: color 0.2s ease;
 }
-
 a:hover {
   text-decoration: underline;
   color: #e02424;
@@ -47,8 +46,28 @@ a:hover {
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
-
 .btn-primary:hover {
+  background-color: #b91c1c;
+}
+.btn-primary:focus-visible {
+  outline: 2px solid #e02424;
+  outline-offset: 2px;
+}
+
+/* === Cards / Utils === */
+.card-shadow {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+}
+.text-marque {
+  color: #e02424;
+}
+.bg-marque {
+  background-color: #e02424;
+}
+.bg-marque-dark {
   background-color: #b91c1c;
 }
 
@@ -62,53 +81,31 @@ img {
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #e02424;
   border-radius: 4px;
 }
 
-/* === Cards / Utilities === */
-.card-shadow {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border-radius: 1rem;
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-}
-
-.text-brand {
-  color: #e02424;
-}
-
-.bg-brand {
-  background-color: #e02424;
-}
-
-.bg-brand-dark {
-  background-color: #b91c1c;
-}
-
 /* === Animations === */
 @keyframes scrollGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-
 .animate-scroll-bar {
   animation: scrollGradient 4s ease infinite;
 }
-
+@keyframes scrollBarGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 .animate-spin-slow {
   animation: spin 8s linear infinite;
+}
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
 }

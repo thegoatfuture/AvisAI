@@ -1,40 +1,30 @@
-// components/GlowCard.jsx
-import React, { useEffect, useRef } from "react";
+"use client";
 
-export default function GlowCard({ children }) {
-  const glowRef = useRef(null);
+import React from "react";
+import { motion } from "framer-motion";
 
-  useEffect(() => {
-    let angle = 0;
-    let raf;
-    const rotate = () => {
-      angle = (angle + 1.2) % 360;
-      if (glowRef.current) {
-        glowRef.current.style.transform = `rotate(${angle}deg)`;
-      }
-      raf = requestAnimationFrame(rotate);
-    };
-    raf = requestAnimationFrame(rotate);
-    return () => cancelAnimationFrame(raf);
-  }, []);
+interface GlowCardProps {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+}
 
+export default function GlowCard({ title, description, icon }: GlowCardProps) {
   return (
-    <div className="relative rounded-2xl bg-zinc-900 overflow-hidden shadow-xl">
-      <div
-        ref={glowRef}
-        className="absolute inset-0 z-0 rounded-2xl pointer-events-none"
-        style={{
-          backgroundImage:
-            "conic-gradient(from 0deg at 50% 50%, transparent 91%, #f43f5e 96%, #f97316 99%, transparent 100%)",
-          maskImage: "linear-gradient(#000, #000)",
-          WebkitMaskImage: "linear-gradient(#000, #000)",
-          filter: "drop-shadow(0 0 12px #f43f5e)",
-          transformOrigin: "center",
-        }}
-      ></div>
-      <div className="relative z-10 px-6 py-8 rounded-2xl">
-        {children}
+    <motion.div
+      whileHover={{ scale: 1.04, boxShadow: "0 0 24px rgba(255,105,180,0.6)" }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="relative p-6 bg-zinc-900/80 backdrop-blur-md rounded-2xl text-white border border-zinc-800 hover:border-pink-500 transition duration-300 ease-in-out"
+    >
+      <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-full bg-pink-600/20 text-pink-400">
+        {icon}
       </div>
-    </div>
+
+      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <p className="text-sm text-zinc-300">{description}</p>
+
+      {/* Glow effect */}
+      <div className="absolute inset-0 rounded-2xl pointer-events-none bg-pink-500/10 blur-xl opacity-0 hover:opacity-30 transition-opacity duration-300" />
+    </motion.div>
   );
 }

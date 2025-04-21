@@ -1,54 +1,47 @@
+"use client";
+
 import React from "react";
 import { motion } from "framer-motion";
-import { Rocket, Eye, Sparkles } from "lucide-react";
-import GlowCard from "./GlowCard";
+import { Rocket, Sparkles } from "lucide-react";
+import Link from "next/link";
 
-const features = [
-  {
-    icon: <Rocket className="w-6 h-6 text-red-500" />,
-    title: "Génération instantanée",
-    text: "Créez des avis et visuels crédibles en quelques secondes grâce à notre IA avancée.",
-  },
-  {
-    icon: <Eye className="w-6 h-6 text-red-500" />,
-    title: "Analyse des tendances",
-    text: "Suivez ce qui fonctionne en temps réel pour ajuster votre stratégie marketing.",
-  },
-  {
-    icon: <Sparkles className="w-6 h-6 text-red-500" />,
-    title: "Personnalisation facile",
-    text: "Modifiez couleurs, formats et messages pour correspondre à votre identité de marque.",
-  },
-];
-
-export default function FeatureSection() {
+export default function Section6() {
   return (
-    <section className="py-24 px-6 bg-white dark:bg-black">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {features.map((feature, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.2, duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <GlowCard>
-              <div className="text-center">
-                <div className="flex justify-center items-center mx-auto mb-6 w-14 h-14 rounded-full bg-red-500/10">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 text-sm">
-                  {feature.text}
-                </p>
-              </div>
-            </GlowCard>
-          </motion.div>
-        ))}
-      </div>
+    <section className="py-24 px-6 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 text-white overflow-hidden">
+      <motion.div
+        className="max-w-6xl mx-auto text-center"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+          🚀 Propulsez vos témoignages avec notre IA
+        </h2>
+        <p className="text-lg md:text-xl text-zinc-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+          Générer des avis authentiques n’a jamais été aussi simple. Automatisez votre preuve sociale en un clic, et convertissez davantage avec moins d'effort.
+        </p>
+
+        <div className="flex justify-center items-center gap-4 flex-wrap">
+          <Link href="/register">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-pink-600 hover:bg-pink-700 transition px-8 py-3 text-white font-medium rounded-full shadow-lg"
+            >
+              Commencer maintenant
+            </motion.button>
+          </Link>
+          <Link href="/faq">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-zinc-800 hover:bg-zinc-700 transition px-8 py-3 text-white font-medium rounded-full shadow-lg flex items-center gap-2"
+            >
+              <Sparkles size={18} /> En savoir plus
+            </motion.button>
+          </Link>
+        </div>
+      </motion.div>
     </section>
   );
 }

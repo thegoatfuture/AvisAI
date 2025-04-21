@@ -1,24 +1,23 @@
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
+import Lottie from "lottie-react";
+import animationData from "@/animations/loading.json";
+import { motion } from "framer-motion";
 
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
-
-type LottiePlayerProps = {
-  animationData: object;
-  loop?: boolean;
-  className?: string;
-};
-
-export default function LottiePlayer({
-  animationData,
-  loop = true,
-  className = "w-60 h-60 mx-auto",
-}: LottiePlayerProps) {
+export default function LottieReact() {
   return (
-    <div className={className}>
-      <Lottie animationData={animationData} loop={loop} />
-    </div>
+    <motion.div
+      className="w-48 h-48 mx-auto"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <Lottie
+        animationData={animationData}
+        loop
+        className="w-full h-full drop-shadow-xl"
+      />
+    </motion.div>
   );
 }

@@ -1,15 +1,22 @@
-// components/providers.tsx
-'use client'
+"use client";
 
-import { SessionProvider } from 'next-auth/react'
-import { ThemeProvider } from '@/contexts/ThemeContext'
+import { SessionProvider } from "next-auth/react";
+import { LazyMotion, domAnimation } from "framer-motion";
+import { ThemeProvider } from "next-themes";
+import React from "react";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+  children: React.ReactNode;
+}
+
+export default function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        {children}
-      </ThemeProvider>
+      <LazyMotion features={domAnimation}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </LazyMotion>
     </SessionProvider>
-  )
+  );
 }

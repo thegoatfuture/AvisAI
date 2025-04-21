@@ -1,3 +1,15 @@
 {
-  "/not-found": "app/not-found.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/login/page": "app/login/page.js",
+  "/features/page": "app/features/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/register/page": "app/register/page.js",
+  "/page": "app/page.js",
+  "/faq/page": "app/faq/page.js",
+  "/api/avis/route": "app/api/avis/route.js",
+  "/api/generate/route": "app/api/generate/route.js",
+  "/api/avis/[id]/route": "app/api/avis/[id]/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
 }
