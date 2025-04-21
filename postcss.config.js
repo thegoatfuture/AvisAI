@@ -1,7 +1,7 @@
-// postcss.config.js — Config officielle Next.js + Tailwind CSS
+// postcss.config.js — Vercel-compatible Tailwind 2025
 module.exports = {
   plugins: {
-    tailwindcss: {},
+    "@tailwindcss/postcss": {},
     autoprefixer: {},
   },
 };
