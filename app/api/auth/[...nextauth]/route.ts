@@ -1,12 +1,21 @@
 import NextAuth from "next-auth";
-import { authOptions } from "@/lib/authOptions";
 
-console.log("🔍 authOptions at build time:", {
-  providers: authOptions.providers?.length,
-  secret: authOptions.secret,
-  url: process.env.NEXTAUTH_URL,
-  db: typeof authOptions.adapter !== "undefined" ? "adapter OK" : "adapter MISSING"
-});
+console.log("⏳ [NextAuth] Début import dynamique de authOptions...");
+
+let authOptions: any = {};
+try {
+  const imported = await import('@/lib/authOptions');
+  authOptions = imported.authOptions;
+
+  console.log("✅ [NextAuth] authOptions importés :", {
+    hasProviders: !!authOptions.providers,
+    hasAdapter: !!authOptions.adapter,
+    hasSecret: !!authOptions.secret,
+  });
+} catch (err) {
+  console.error("❌ [NextAuth] ERREUR lors de l'import de authOptions :", err);
+  throw err;
+}
 
 const handler = NextAuth(authOptions);
 
