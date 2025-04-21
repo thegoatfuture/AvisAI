@@ -3,7 +3,7 @@ import { db } from "@/lib/prisma";
 import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+export const getAuthOptions = (): NextAuthOptions => ({
   adapter: PrismaAdapter(db),
   providers: [
     GoogleProvider({
@@ -27,4 +27,4 @@ export const authOptions: NextAuthOptions = {
     },
   },
   debug: process.env.NODE_ENV === "development",
-};
+});

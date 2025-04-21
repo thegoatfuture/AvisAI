@@ -1,9 +1,8 @@
-// app/api/avis/route.ts
-export const dynamic = "force-dynamic"; // ✅ Indique à Next.js que cette route ne peut PAS être statique
+export const dynamic = "force-dynamic"; // ✅ Rend la route dynamique (Next.js App Router)
 
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthOptions } from "@/lib/authOptions";
 import { db } from "@/lib/prisma";
 
 /**
@@ -11,7 +10,7 @@ import { db } from "@/lib/prisma";
  */
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(getAuthOptions());
 
     if (!session?.user?.email) {
       return NextResponse.json(

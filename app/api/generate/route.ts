@@ -1,15 +1,14 @@
-// app/api/generate/route.ts
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+import { getAuthOptions } from "@/lib/authOptions";
 import { db } from "@/lib/prisma";
 import { OpenAIStream, OpenAIStreamPayload } from "@/lib/openai";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession(getAuthOptions());
 
     if (!session?.user?.email) {
       return NextResponse.json({ message: "Non autorisé" }, { status: 401 });
