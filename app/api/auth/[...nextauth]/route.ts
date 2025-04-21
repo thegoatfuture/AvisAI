@@ -1,9 +1,8 @@
-export const dynamic = "force-dynamic"; // 🔒 Empêche le build statique de cette route
+export const dynamic = "force-dynamic";
 
 import NextAuth from "next-auth";
 import { getAuthOptions } from "@/lib/authOptions";
 
-// Appel direct de la fonction pour construire authOptions dynamiquement
 const handler = NextAuth(getAuthOptions());
 
 export const GET = handler;
