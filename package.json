@@ -22,6 +22,12 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "prisma": "6.6.0"
+    "@tailwindcss/aspect-ratio": "0.4.2",
+    "@tailwindcss/forms": "0.5.10",
+    "@tailwindcss/typography": "0.5.16",
+    "autoprefixer": "10.4.21",
+    "postcss": "8.5.3",
+    "prisma": "6.6.0",
+    "tailwindcss": "4.1.4"
   }
 }
