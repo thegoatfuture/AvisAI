@@ -4,7 +4,7 @@ import "@/styles/globals.css"; // 💡 Import global obligatoire (ex: Tailwind, 
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import PageWrapper from "@/components/PageWrapper";
 import Providers from "@/components/Providers";
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr" suppressHydrationWarning>
       <body className="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500">
         <Providers>
-          <Navbar />
+          <Header />
           <div className={`flex min-h-screen`}>
             {isDashboard && <Sidebar />}
             <PageWrapper>{children}</PageWrapper>
