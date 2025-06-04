@@ -2,15 +2,19 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { TrendingUp } from "lucide-react";
+import Link from "next/link";
 
 export default function TrendInsightSection() {
-  const scrollToSection = () => {
-    const el = document.getElementById("features");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-black py-24 px-6 text-center text-zinc-800 dark:text-white transition-colors duration-500">
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="relative overflow-hidden bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-black py-24 px-6 text-center text-zinc-800 dark:text-white"
+    >
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -19,11 +23,7 @@ export default function TrendInsightSection() {
         className="flex justify-center mb-8"
       >
         <div className="p-4 bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-marque/30 rounded-full shadow-lg">
-          <img
-            src="https://www.svgrepo.com/show/501392/growth-up.svg"
-            alt="Icône de tendances"
-            className="w-10 h-10 text-marque"
-          />
+          <TrendingUp className="w-10 h-10 text-marque" />
         </div>
       </motion.div>
 
@@ -55,13 +55,13 @@ export default function TrendInsightSection() {
         transition={{ delay: 0.6 }}
         viewport={{ once: true }}
       >
-        <button
-          onClick={scrollToSection}
-          className="bg-marque hover:bg-red-600 text-white font-semibold text-lg px-6 py-3 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
+        <Link
+          href="/features"
+          className="inline-block bg-marque hover:bg-red-600 text-white font-semibold text-lg px-6 py-3 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95"
         >
-          Commencer à suivre maintenant
-        </button>
+          Découvrir les fonctionnalités
+        </Link>
       </motion.div>
-    </section>
+    </motion.section>
   );
 }
