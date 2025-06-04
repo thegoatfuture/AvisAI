@@ -2,35 +2,43 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils"; // si tu utilises une fonction classNames utilitaire
+import { cn } from "@/lib/utils";
 
-interface FeatureCardProps {
+export interface FeatureCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
+  className?: string;
 }
 
-export default function FeatureCard({ icon, title, description }: FeatureCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      viewport={{ once: true }}
-      className={cn(
-        "group relative overflow-hidden rounded-2xl p-6 shadow-md bg-white/90 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-      )}
-    >
-      <div className="flex items-center justify-center w-14 h-14 mb-4 rounded-full bg-pink-100 dark:bg-pink-500/10">
-        {icon}
-      </div>
-      <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2 group-hover:text-pink-500 transition-colors">
-        {title}
-      </h3>
-      <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+const FeatureCard = React.forwardRef<HTMLDivElement, FeatureCardProps>(
+  ({ icon, title, description, className }, ref) => {
+    return (
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.03 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className={cn(
+          "group relative overflow-hidden rounded-2xl border bg-white/90 dark:bg-zinc-900/80 p-6 shadow-md backdrop-blur-md transition-all hover:-translate-y-1 hover:shadow-xl",
+          className
+        )}
+      >
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-pink-100 dark:bg-pink-500/10">
+          {icon}
+        </div>
+        <h3 className="mb-2 text-xl font-semibold text-zinc-900 transition-colors group-hover:text-pink-500 dark:text-white">
+          {title}
+        </h3>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-20" />
+      </motion.div>
+    );
+  }
+);
 
-      {/* effet glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 blur-2xl rounded-2xl" />
-    </motion.div>
-  );
-}
+FeatureCard.displayName = "FeatureCard";
+
+export default FeatureCard;
