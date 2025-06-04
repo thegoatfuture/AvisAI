@@ -1,37 +1,37 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import React from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
-export default function ScrollProgress() {
-  const [scrollTop, setScrollTop] = useState(0);
-  const controls = useAnimation();
+interface ScrollProgressProps {
+  /**
+   * Height of the progress bar in pixels.
+   * @default 4
+   */
+  height?: number;
+  /**
+   * CSS gradient used for the bar background.
+   * @default "linear-gradient(90deg, #ff416c, #ff4b2b, #ff416c)"
+   */
+  gradient?: string;
+}
 
-  useEffect(() => {
-    const onScroll = () => {
-      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      setScrollTop(scrolled);
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    controls.start({ width: `${scrollTop}%` });
-  }, [scrollTop, controls]);
+export default function ScrollProgress({
+  height = 4,
+  gradient = "linear-gradient(90deg, #ff416c, #ff4b2b, #ff416c)",
+}: ScrollProgressProps) {
+  const { scrollYProgress } = useScroll();
+  const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const smoothWidth = useSpring(width, { stiffness: 120, damping: 20 });
 
   return (
     <motion.div
       aria-hidden="true"
-      className="fixed top-0 left-0 z-[9999] h-1 pointer-events-none will-change-transform"
-      animate={controls}
-      initial={{ width: 0 }}
-      transition={{ ease: "easeOut", duration: 0.2 }}
+      className="fixed top-0 left-0 z-[9999] pointer-events-none"
       style={{
-        background: "linear-gradient(90deg, #ff416c, #ff4b2b, #ff416c)",
+        width: smoothWidth,
+        height,
+        background: gradient,
         backgroundSize: "200% 200%",
         animation: "scrollBarGlow 3s ease infinite",
       }}
