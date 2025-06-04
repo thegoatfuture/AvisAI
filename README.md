@@ -32,3 +32,19 @@ Bienvenue sur **AvisAI**, une solution SaaS alimentée par l'IA pour générer, 
 git clone https://github.com/tonuser/avisai.git
 cd avisai
 npm install
+```
+
+### Utilisation
+
+Pour démarrer le serveur de développement :
+
+```bash
+npm run dev
+```
+
+Pour construire et lancer l'application en production :
+
+```bash
+npm run build
+npm start
+```
