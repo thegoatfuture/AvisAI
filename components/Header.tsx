@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
-const navLinks = [
+interface NavLink {
+  name: string;
+  href: string;
+}
+
+const NAV_LINKS: NavLink[] = [
   { name: "Accueil", href: "/" },
   { name: "Fonctionnalités", href: "/features" },
   { name: "Tarifs", href: "/pricing" },
@@ -15,6 +21,7 @@ const navLinks = [
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="fixed w-full top-0 z-50 bg-white/70 dark:bg-black/70 backdrop-blur-lg border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
@@ -24,7 +31,7 @@ export default function Header() {
         </Link>
 
         <nav className="hidden md:flex space-x-6 text-sm font-medium">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <motion.div
               key={link.name}
               whileHover={{ scale: 1.05 }}
@@ -32,7 +39,11 @@ export default function Header() {
             >
               <Link
                 href={link.href}
-                className="text-zinc-700 dark:text-zinc-200 hover:text-pink-600 transition"
+                className={`transition ${
+                  pathname === link.href
+                    ? "text-pink-600 dark:text-pink-500 font-semibold"
+                    : "text-zinc-700 dark:text-zinc-200 hover:text-pink-600"
+                }`}
               >
                 {link.name}
               </Link>
@@ -52,37 +63,44 @@ export default function Header() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 text-zinc-700 dark:text-zinc-200"
+          aria-label="Menu"
+          aria-expanded={isOpen}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-
-      {isOpen && (
-        <motion.div
-          initial={{ height: 0 }}
-          animate={{ height: "auto" }}
-          exit={{ height: 0 }}
-          className="md:hidden px-6 pb-4 space-y-2"
-        >
-          {navLinks.map((link) => (
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden px-6 pb-4 space-y-2"
+          >
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`block transition ${
+                  pathname === link.href
+                    ? "text-pink-600 dark:text-pink-500 font-semibold"
+                    : "text-zinc-700 dark:text-zinc-200 hover:text-pink-600"
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
             <Link
-              key={link.name}
-              href={link.href}
-              className="block text-zinc-700 dark:text-zinc-200 hover:text-pink-600 transition"
+              href="/login"
+              className="block w-full bg-pink-600 text-white text-center font-medium py-2 rounded-lg mt-2 hover:bg-pink-700 transition"
               onClick={() => setIsOpen(false)}
             >
-              {link.name}
+              Se connecter
             </Link>
-          ))}
-          <Link
-            href="/login"
-            className="block w-full bg-pink-600 text-white text-center font-medium py-2 rounded-lg mt-2 hover:bg-pink-700 transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Se connecter
-          </Link>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
