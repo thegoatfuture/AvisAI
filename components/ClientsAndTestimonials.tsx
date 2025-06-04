@@ -1,29 +1,44 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import AvisCard from "./AvisCard";
 
-const clients = [
-  "/clients/google.svg",
-  "/clients/meta.svg",
-  "/clients/shopify.svg",
-  "/clients/stripe.svg",
-  "/clients/vercel.svg",
+interface Client {
+  src: string;
+  name: string;
+}
+
+interface Testimonial {
+  name: string;
+  avatar: string;
+  rating: number;
+  content: string;
+}
+
+const clients: Client[] = [
+  { src: "/clients/google.svg", name: "Google" },
+  { src: "/clients/meta.svg", name: "Meta" },
+  { src: "/clients/shopify.svg", name: "Shopify" },
+  { src: "/clients/stripe.svg", name: "Stripe" },
+  { src: "/clients/vercel.svg", name: "Vercel" },
 ];
 
-const testimonials = [
+const testimonials: Testimonial[] = [
   {
     name: "Camille D.",
     avatar: "/avatars/camille.png",
     rating: 5,
-    content: "AvisAI m'a permis d'augmenter la conversion de 27% en une semaine seulement ! Un outil indispensable.",
+    content:
+      "AvisAI m'a permis d'augmenter la conversion de 27% en une semaine seulement ! Un outil indispensable.",
   },
   {
     name: "Léo M.",
     avatar: "/avatars/leo.png",
     rating: 4,
-    content: "L'intégration des avis est super fluide, et l'effet est immédiat sur notre crédibilité.",
+    content:
+      "L'intégration des avis est super fluide, et l'effet est immédiat sur notre crédibilité.",
   },
 ];
 
@@ -42,12 +57,14 @@ export default function ClientsAndTestimonials() {
             Ils nous font confiance
           </h2>
           <div className="flex flex-wrap gap-6">
-            {clients.map((logo, index) => (
-              <img
-                key={index}
-                src={logo}
-                alt={`Client ${index + 1}`}
-                className="h-10 grayscale hover:grayscale-0 transition"
+            {clients.map((client) => (
+              <Image
+                key={client.src}
+                src={client.src}
+                alt={client.name}
+                width={120}
+                height={40}
+                className="h-10 w-auto grayscale hover:grayscale-0 transition"
               />
             ))}
           </div>
