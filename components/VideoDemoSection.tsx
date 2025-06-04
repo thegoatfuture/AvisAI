@@ -1,9 +1,26 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 export default function VideoDemoSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isInView = useInView(videoRef, { margin: "-50% 0px -50% 0px" });
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isInView) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    } else {
+      video.pause();
+    }
+  }, [isInView]);
+
   return (
     <section className="relative py-24 px-6 bg-white dark:bg-zinc-950 text-center overflow-hidden">
       <motion.div
@@ -29,10 +46,12 @@ export default function VideoDemoSection() {
         className="relative z-10 max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-200 dark:border-zinc-800"
       >
         <video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
+          controls
+          preload="metadata"
           className="w-full h-full object-cover"
         >
           <source src="/demo.mp4" type="video/mp4" />
