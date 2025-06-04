@@ -7,41 +7,42 @@ import Link from "next/link";
 
 export default function Section6() {
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 text-white overflow-hidden">
+    <section className="relative overflow-hidden py-24 px-6 bg-gradient-to-br from-marqueDark via-marque to-red-600 text-white">
       <motion.div
-        className="max-w-6xl mx-auto text-center"
-        initial={{ opacity: 0, y: 30 }}
+        className="relative z-10 max-w-6xl mx-auto text-center"
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-          🚀 Propulsez vos témoignages avec notre IA
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">
+          Propulsez votre crédibilité en un clin d'œil
         </h2>
-        <p className="text-lg md:text-xl text-zinc-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-          Générer des avis authentiques n’a jamais été aussi simple. Automatisez votre preuve sociale en un clic, et convertissez davantage avec moins d'effort.
+        <p className="text-lg md:text-xl text-white/80 mb-10 max-w-3xl mx-auto leading-relaxed">
+          Automatisez la collecte et la diffusion de témoignages clients grâce à notre IA. Augmentez la confiance autour de votre marque et convertissez davantage.
         </p>
-
-        <div className="flex justify-center items-center gap-4 flex-wrap">
-          <Link href="/register">
-            <motion.button
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <Link href="/register" passHref legacyBehavior>
+            <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-pink-600 hover:bg-pink-700 transition px-8 py-3 text-white font-medium rounded-full shadow-lg"
+              className="bg-marque hover:bg-marqueDark transition px-8 py-3 rounded-full font-medium flex items-center gap-2 shadow-lg"
             >
-              Commencer maintenant
-            </motion.button>
+              <Rocket size={18} /> Démarrer maintenant
+            </motion.a>
           </Link>
-          <Link href="/faq">
-            <motion.button
+          <Link href="/faq" passHref legacyBehavior>
+            <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-zinc-800 hover:bg-zinc-700 transition px-8 py-3 text-white font-medium rounded-full shadow-lg flex items-center gap-2"
+              className="bg-white/10 hover:bg-white/20 transition px-8 py-3 rounded-full font-medium flex items-center gap-2"
             >
               <Sparkles size={18} /> En savoir plus
-            </motion.button>
+            </motion.a>
           </Link>
         </div>
       </motion.div>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/20 via-transparent to-white/10 opacity-25 blur-2xl" />
     </section>
   );
 }
