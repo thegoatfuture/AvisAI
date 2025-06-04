@@ -1,10 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
-const faqItems = [
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const faqItems: FAQItem[] = [
   {
     question: "Comment fonctionne AvisAI ?",
     answer:
@@ -35,6 +40,10 @@ const faqItems = [
 export default function PageFAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  const toggle = useCallback((index: number) => {
+    setOpenIndex((current) => (current === index ? null : index));
+  }, []);
+
   return (
     <main className="min-h-screen px-6 py-24 bg-white dark:bg-zinc-950 text-black dark:text-white transition-colors duration-500">
       <motion.div
@@ -49,43 +58,53 @@ export default function PageFAQ() {
         </p>
       </motion.div>
 
-      <section className="max-w-3xl mx-auto space-y-6">
-        {faqItems.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * index }}
-            viewport={{ once: true }}
-            className="border border-zinc-300 dark:border-zinc-700 rounded-xl bg-white/40 dark:bg-white/5 backdrop-blur-sm shadow-sm"
-          >
-            <button
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              className="w-full px-6 py-4 flex justify-between items-center text-left text-base md:text-lg font-medium"
-            >
-              <span>{item.question}</span>
-              <ChevronDown
-                className={`w-5 h-5 transition-transform ${
-                  openIndex === index ? "rotate-180" : "rotate-0"
-                }`}
-              />
-            </button>
+      <section className="max-w-3xl mx-auto space-y-6" aria-label="FAQ">
+        <dl className="space-y-4">
+          {faqItems.map((item, index) => {
+            const isOpen = openIndex === index;
+            const id = `faq-${index}`;
 
-            <AnimatePresence initial={false}>
-              {openIndex === index && (
-                <motion.div
-                  className="px-6 pb-4 text-sm md:text-base text-zinc-600 dark:text-zinc-300"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {item.answer}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
+            return (
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index }}
+                viewport={{ once: true }}
+                className="border border-zinc-300 dark:border-zinc-700 rounded-xl bg-white/40 dark:bg-white/5 backdrop-blur-sm shadow-sm"
+              >
+                <dt>
+                  <button
+                    onClick={() => toggle(index)}
+                    aria-expanded={isOpen}
+                    aria-controls={id}
+                    className="w-full px-6 py-4 flex justify-between items-center text-left text-base md:text-lg font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-marque"
+                  >
+                    <span>{item.question}</span>
+                    <ChevronDown
+                      className={`w-5 h-5 transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+                    />
+                  </button>
+                </dt>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.dd
+                      id={id}
+                      className="px-6 pb-4 text-sm md:text-base text-zinc-600 dark:text-zinc-300"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {item.answer}
+                    </motion.dd>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </dl>
       </section>
     </main>
   );
