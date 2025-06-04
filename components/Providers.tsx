@@ -1,20 +1,30 @@
 "use client";
 
+import React, { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { ThemeProvider } from "next-themes";
-import React from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import ErrorBoundary from "./ErrorBoundary";
 
 interface ProvidersProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
-      <LazyMotion features={domAnimation}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+      <LazyMotion strict features={domAnimation}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          enableColorScheme
+        >
+          <ErrorBoundary>
+            {children}
+            <SpeedInsights />
+          </ErrorBoundary>
         </ThemeProvider>
       </LazyMotion>
     </SessionProvider>
