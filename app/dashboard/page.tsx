@@ -1,7 +1,8 @@
 export const dynamic = "force-dynamic";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "@/lib/authOptions";
-import ListeAvis, { Avis } from "@/components/ListeAvis";
+import AvisGenerator from "@/components/AvisGenerator";
+import { Avis } from "@/components/ListeAvis";
 import { motion } from "framer-motion";
 
 export default async function DashboardPage() {
@@ -39,10 +40,7 @@ export default async function DashboardPage() {
         Bienvenue, {session?.user?.name || "Utilisateur"}
       </motion.h1>
 
-      <section>
-        <h2 className="text-xl font-semibold mb-2">🧾 Vos derniers avis :</h2>
-        <ListeAvis avis={avis} />
-      </section>
+      <AvisGenerator initialAvis={avis} />
     </main>
   );
 }
