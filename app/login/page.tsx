@@ -4,8 +4,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
+  const errorMessage =
+    error ? "Échec de la connexion. Veuillez réessayer." : null;
+
   return (
     <main className="min-h-screen flex items-center justify-center bg-white dark:bg-black px-4">
       <motion.div
@@ -16,42 +24,14 @@ export default function LoginPage() {
       >
         <h2 className="text-2xl font-bold text-center text-pink-600">Connexion</h2>
 
-        <form className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">
-              Adresse email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="you@example.com"
-              className="w-full px-4 py-2 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-white border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
-            />
-          </div>
+        {errorMessage && (
+          <p className="text-center text-sm text-red-500">{errorMessage}</p>
+        )}
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="••••••••"
-              className="w-full px-4 py-2 rounded-lg bg-white dark:bg-zinc-800 text-black dark:text-white border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 rounded-lg transition"
-          >
-            Se connecter
-          </button>
-        </form>
-
-        <div className="text-center text-sm text-zinc-500 dark:text-zinc-400">ou</div>
-
-        <button className="w-full flex items-center justify-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 py-2 rounded-lg hover:shadow-md transition">
+        <button
+          onClick={() => signIn("google")}
+          className="w-full flex items-center justify-center gap-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 py-2 rounded-lg hover:shadow-md transition"
+        >
           <img src="/google.svg" alt="Google" className="w-5 h-5" />
           <span className="text-sm font-medium">Connexion avec Google</span>
         </button>
