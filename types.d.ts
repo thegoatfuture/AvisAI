@@ -9,6 +9,8 @@ declare global {
         DATABASE_URL: string;
         NEXTAUTH_SECRET: string;
         NEXTAUTH_URL: string;
+        SENDINBLUE_API_KEY: string;
+        SENDINBLUE_LIST_ID: string;
       }
     }
   

@@ -21,9 +21,43 @@ export async function POST(req: Request) {
       );
     }
 
-    // 👉 Ici, connectez-vous à votre fournisseur d'emailing ou base de données
-    // Exemple : await fetch(process.env.NEWSLETTER_ENDPOINT!, { ... })
-    console.log(`✅ Nouvelle inscription newsletter : ${email}`);
+    // 👉 Inscription via Sendinblue
+    const apiKey = process.env.SENDINBLUE_API_KEY;
+    const listId = process.env.SENDINBLUE_LIST_ID;
+
+    if (!apiKey || !listId) {
+      console.error(
+        "❌ Configuration Sendinblue manquante: ajoutez SENDINBLUE_API_KEY et SENDINBLUE_LIST_ID"
+      );
+    } else {
+      const res = await fetch("https://api.sendinblue.com/v3/contacts", {
+        method: "POST",
+        headers: {
+          "api-key": apiKey,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          listIds: [Number(listId)],
+          updateEnabled: true,
+        }),
+      });
+
+      if (!res.ok) {
+        console.error(
+          "❌ Erreur Sendinblue:",
+          res.status,
+          await res.text()
+        );
+        return NextResponse.json(
+          { message: "Erreur lors de l'inscription" },
+          { status: 500 }
+        );
+      }
+
+      console.log(`✅ Nouvelle inscription newsletter : ${email}`);
+    }
 
     return NextResponse.json({ message: "Inscription confirmée" });
   } catch (error) {
