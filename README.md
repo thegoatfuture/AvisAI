@@ -48,3 +48,16 @@ Pour construire et lancer l'application en production :
 npm run build
 npm start
 ```
+
+### Configuration newsletter
+
+AvisAI s'appuie sur Sendinblue pour stocker les abonnés. Créez un fichier
+`.env.local` à la racine et renseignez :
+
+```bash
+SENDINBLUE_API_KEY=VotreCléAPI
+SENDINBLUE_LIST_ID=123
+```
+
+L'API `/api/newsletter` utilisera ces informations pour ajouter chaque email
+inscrit dans la liste spécifiée.
