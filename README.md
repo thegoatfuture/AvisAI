@@ -48,3 +48,19 @@ Pour construire et lancer l'application en production :
 npm run build
 npm start
 ```
+
+## 🛠 Variables d'environnement
+
+Un fichier `.env.example` est fourni à la racine. Copiez-le en `.env` et renseignez chaque clé :
+
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `DATABASE_URL`
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL`
+- `OPENAI_API_KEY`
+- `NEXT_PUBLIC_BASE_URL`
+
+Ces variables doivent être définies localement **et** dans Vercel afin que le déploiement fonctionne correctement.
+
+Lors de `npm install`, le script `postinstall` exécute automatiquement `prisma generate` pour préparer le client Prisma.
