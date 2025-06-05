@@ -27,7 +27,7 @@ export const getAuthOptions = (): NextAuthOptions => ({
     },
   },
   events: {
-    async error(message) {
+    async error(message: unknown) {
       console.error("NextAuth error:", message);
       try {
         await fetch(`${process.env.NEXTAUTH_URL}/api/log-error`, {
@@ -39,6 +39,8 @@ export const getAuthOptions = (): NextAuthOptions => ({
         console.error("Échec d'envoi du log NextAuth:", loggingError);
       }
     },
+  } as NextAuthOptions["events"] & {
+    error: (message: unknown) => Promise<void>;
   },
   debug: process.env.NODE_ENV === "development",
 });
