@@ -32,6 +32,8 @@ Bienvenue sur **AvisAI**, une solution SaaS alimentée par l'IA pour générer, 
 git clone https://github.com/tonuser/avisai.git
 cd avisai
 npm install
+# If your environment cannot fetch Prisma engine checksums, prefix the command:
+# PRISMA_ENGINES_CHECKSUM_IGNORE_MISSING=1 npm install
 
 # Copiez l'exemple de configuration puis remplissez vos variables
 cp .env.example .env
@@ -82,3 +84,11 @@ SENDINBLUE_LIST_ID=123
 
 L'API `/api/newsletter` utilisera ces informations pour ajouter chaque email
 inscrit dans la liste spécifiée.
+
+### Tests
+
+Assurez-vous que `npm install` se termine sans erreur avant de lancer les tests.
+
+```bash
+npm test
+```
