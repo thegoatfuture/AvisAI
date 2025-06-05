@@ -10,6 +10,7 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   scroll-behavior: smooth;
+  overflow-x: hidden;
   background-color: #000;
   color: #fff;
 }
