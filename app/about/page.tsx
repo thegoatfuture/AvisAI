@@ -2,6 +2,12 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "À propos | AvisAI",
+  description: "Apprenez-en plus sur la mission et la vision de l'équipe AvisAI.",
+};
 
 export default function PageAbout() {
   return (
