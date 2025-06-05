@@ -2,11 +2,6 @@ import "@/styles/globals.css";
 
 import React from "react";
 import { Inter } from "next/font/google";
-import { usePathname } from "next/navigation";
-
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import PageWrapper from "@/components/PageWrapper";
 import Providers from "@/components/Providers";
 import Footer from "@/components/Footer";
 import LayoutShell from "@/components/LayoutShell";
@@ -30,18 +25,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const isDashboard = pathname?.startsWith("/dashboard");
-
   return (
     <html lang="fr" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
       <body className="bg-white dark:bg-black text-black dark:text-white transition-colors duration-500">
         <Providers>
-          <Header />
-          <div className="flex min-h-screen">
-            {isDashboard && <Sidebar />}
-            <PageWrapper>{children}</PageWrapper>
-          </div>
+          <LayoutShell>{children}</LayoutShell>
           <Footer />
           <SpeedInsights />
         </Providers>
