@@ -26,5 +26,19 @@ export const getAuthOptions = (): NextAuthOptions => ({
       return token;
     },
   },
+  events: {
+    async error(message) {
+      console.error("NextAuth error:", message);
+      try {
+        await fetch(`${process.env.NEXTAUTH_URL}/api/log-error`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ error: String(message) }),
+        });
+      } catch (loggingError) {
+        console.error("Échec d'envoi du log NextAuth:", loggingError);
+      }
+    },
+  },
   debug: process.env.NODE_ENV === "development",
 });
