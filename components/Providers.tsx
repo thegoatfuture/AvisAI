@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { ThemeProvider } from "next-themes";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import ErrorBoundary from "./ErrorBoundary";
 
 interface ProvidersProps {
@@ -21,10 +20,7 @@ export default function Providers({ children }: ProvidersProps) {
           enableSystem
           enableColorScheme
         >
-          <ErrorBoundary>
-            {children}
-            <SpeedInsights />
-          </ErrorBoundary>
+          <ErrorBoundary>{children}</ErrorBoundary>
         </ThemeProvider>
       </LazyMotion>
     </SessionProvider>
