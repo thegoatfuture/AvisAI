@@ -2,8 +2,14 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Head from "next/head";
+import { Metadata } from "next";
 import { CheckCircle } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Contact | AvisAI",
+  description:
+    "Contactez l'équipe d'AvisAI pour vos demandes de partenariat, démos ou support.",
+};
 
 export default function PageContact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
@@ -15,16 +21,7 @@ export default function PageContact() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Contact | AvisAI</title>
-        <meta
-          name="description"
-          content="Contactez l'équipe d'AvisAI pour vos demandes de partenariat, démos ou support."
-        />
-      </Head>
-
-      <main className="min-h-screen bg-white dark:bg-zinc-950 px-6 py-24 text-black dark:text-white">
+    <main className="min-h-screen bg-white dark:bg-zinc-950 px-6 py-24 text-black dark:text-white">
         <div className="max-w-3xl mx-auto">
           <motion.h1
             className="text-4xl md:text-5xl font-bold mb-6 text-center"
@@ -112,6 +109,5 @@ export default function PageContact() {
           </AnimatePresence>
         </div>
       </main>
-    </>
   );
 }

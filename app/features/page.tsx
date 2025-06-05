@@ -3,6 +3,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rocket, Eye, Sparkles } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Fonctionnalités | AvisAI",
+  description:
+    "Découvrez comment AvisAI simplifie la génération et l'analyse de témoignages clients.",
+};
 import ButtonDuo from "@/components/ui/ButtonDuo";
 
 const allFeatures = [
